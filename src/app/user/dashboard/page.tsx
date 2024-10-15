@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { TrendingUp } from "lucide-react";
 import { Label, Pie, PieChart } from "recharts";
@@ -20,10 +21,34 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import Footer from "@/components/Footer";
 
 export default function Dashboard() {
   const [userName, setUserName] = useState("Rony");
   const [points, setPoints] = useState(256);
+  const [fade, setFade] = useState(false);
+
+  const tips = [
+    "☘️ Reduce plastic use wherever possible to help the environment and conserve resources. Remember that even small changes can make a big difference in reducing waste!",
+    "🌴 Always recycle your waste responsibly. Check local guidelines to ensure you're recycling properly, as  contamination can lead to entire batches being sent to landfill.",
+    "💚 Compost organic waste to reduce landfill. Composting not only decreases the amount of waste sent to landfills but also provides nutrient-rich soil for gardening.",
+    "🌲 Participate in local clean-up drives. Engaging with your community not only helps the environment but also raises awareness about littering and waste management.",
+    "🌱 Educate others about waste management. Sharing knowledge and best practices can inspire others to adopt more sustainable habits.",
+  ];
+
+  const [currentTipIndex, setCurrentTipIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFade(true);
+      setTimeout(() => {
+        setCurrentTipIndex((prevIndex) => (prevIndex + 1) % tips.length);
+        setFade(false);
+      }, 500);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [tips.length]);
 
   const chartData = [
     { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
@@ -38,7 +63,7 @@ export default function Dashboard() {
       label: "Visitors",
     },
     chrome: {
-      label: "Food Waste",
+      label: "Bio-degradable",
       color: "hsl(var(--chart-1))",
     },
     safari: {
@@ -50,11 +75,11 @@ export default function Dashboard() {
       color: "hsl(var(--chart-3))",
     },
     edge: {
-      label: "Edge",
+      label: "Metal",
       color: "hsl(var(--chart-4))",
     },
     other: {
-      label: "Other",
+      label: "Paper/Cardboard",
       color: "hsl(var(--chart-5))",
     },
   } satisfies ChartConfig;
@@ -63,12 +88,17 @@ export default function Dashboard() {
     return chartData.reduce((acc, curr) => acc + curr.visitors, 0);
   }, [chartData]);
 
+  const days = Array.from({ length: 11 }, (_, i) => {
+    const date = new Date();
+    date.setDate(date.getDate() + i);
+    return date.toLocaleDateString("en-GB");
+  });
+
   return (
-    <div className="min-h-screen bg-background text-foreground w-full">
-      <nav className="flex justify-between items-center p-4 bg-card h-96 pt-80">
-        <h1 className="text-2xl font-bold">Dashboard</h1>
+    <div className="min-h-screen bg-background text-foreground w-full pt-64">
+      <nav className="flex justify-between items-center p-4 bg-card pt-80">
+        <h1 className="text-2xl font-extrabold pl-6 pb-3">Hello, {userName}</h1>
         <div className="flex items-center space-x-4">
-          <span>Hi {userName},</span>
           <Avatar>
             <AvatarImage src="/placeholder.svg" alt={userName} />
             <AvatarFallback>{userName[0]}</AvatarFallback>
@@ -83,9 +113,13 @@ export default function Dashboard() {
               <CardTitle>Schedule</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Input placeholder="Enter schedule details" />
-              </div>
+              <ScrollArea className="h-64">
+                <div className="space-y-2">
+                  {days.map((day) => (
+                    <Input key={day} placeholder={`Schedule for ${day}`} />
+                  ))}
+                </div>
+              </ScrollArea>
               <div className="flex justify-end space-x-2">
                 <Button variant="outline">Cancel</Button>
                 <Button variant={"report"}>Reschedule</Button>
@@ -96,7 +130,7 @@ export default function Dashboard() {
           <Card className="flex flex-col">
             <CardHeader className="items-center pb-0">
               <CardTitle>Waste Distribution</CardTitle>
-              <CardDescription>January - June 2024</CardDescription>
+              <CardDescription>October 2024</CardDescription>
             </CardHeader>
             <CardContent className="flex-1 pb-0">
               <ChartContainer
@@ -165,8 +199,8 @@ export default function Dashboard() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Input placeholder="Title" />
-                <Input placeholder="Description" />
+                <Input placeholder="Title..." />
+                <Textarea placeholder="Description..." />
                 <Input type="file" accept="image/*" />
               </div>
               <div className="flex justify-end space-x-2">
@@ -193,18 +227,28 @@ export default function Dashboard() {
             </CardContent>
           </Card>
 
+          <Textarea
+            className={` mt-3 pt-9 text-lg rounded-lg text-muted-foreground transition-opacity duration-900 ${
+              fade ? "opacity-0" : "opacity-100"
+            }`}
+            readOnly
+            rows={3}
+            value={tips[currentTipIndex]}
+          />
+
           <Card className="col-span-full">
             <CardHeader>
               <CardTitle>Nearby Disposal Locations</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted h-[300px] flex items-center justify-center">
-                <p>Google Maps API</p>
+              <div className="bg-muted h-[300px] flex items-center justify-center text-muted-foreground rounded-lg">
+                <p>No locations available yet. Please check back later!</p>
               </div>
             </CardContent>
           </Card>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

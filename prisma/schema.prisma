@@ -23,13 +23,12 @@ enum UserRole {
   RESIDENT
 }
 
-// Voucher system for residents who follow waste disposal guidelines
 model Voucher {
   id          String    @id @default(cuid())
   userId      String
   code        String    @unique
   description String
-  points      Int // Points rewarded for the voucher
+  points      Int
   redeemed    Boolean   @default(false)
   createdAt   DateTime  @default(now())
   redeemedAt  DateTime?
@@ -37,24 +36,25 @@ model Voucher {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-// Waste log model to track different types of waste collected by workers
+//types of waste
 model WasteLog {
   id         String    @id @default(cuid())
-  workerId   String // The worker who logged the waste
-  residentId String // The resident associated with the waste
+  workerId   String
+  residentId String
   wasteType  WasteType
-  quantity   Float // Quantity of waste in kilograms
+  quantity   Float
   loggedAt   DateTime  @default(now())
 
   worker   User @relation("WorkerLogs", fields: [workerId], references: [id], onDelete: Cascade)
   resident User @relation("ResidentLogs", fields: [residentId], references: [id], onDelete: Cascade)
 }
 
-// Enum to specify different types of waste
 enum WasteType {
   PLASTIC
   BIODEGRADABLE
   E_WASTE
+  METAL
+  PAPER
 }
 
 // For Next Auth
@@ -88,9 +88,11 @@ model User {
   id            String     @id @default(cuid())
   username      String?
   name          String?    @unique
+  phone         String?
   email         String?    @unique
   emailVerified DateTime?
   image         String?
+  address       String?
   about         String?
   password      String?
   role          UserRole

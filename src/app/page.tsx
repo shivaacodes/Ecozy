@@ -5,12 +5,12 @@ import { signIn } from "next-auth/react";
 
 export default function Homepage() {
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-green-900 via-emerald-900 to-black text-white w-full">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-green-900 via-emerald-900 to-black text-white w-full animate-gradient-slow bg-[length:200%_200%]">
       <main className="flex-grow flex flex-col items-center justify-center text-center px-4">
         <h2 className="text-5xl md:text-7xl font-bold mb-4 w-full">
           <span className="text-green-400">eco</span>
           <br />
-          Thrissur's Green
+          Thrissur's Clean
           <br />
           Revolution Starts Here.
         </h2>

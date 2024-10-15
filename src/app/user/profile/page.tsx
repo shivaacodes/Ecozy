@@ -46,8 +46,8 @@ export default function ProfilePage() {
 
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-semibold">Report History</h2>
-          <span className="text-xl font-medium text-green-600">
-            POINTS: {user.points}
+          <span className="text-xl font-extrabold text-green-400">
+            Eco-Credits: {user.points}
           </span>
         </div>
 
