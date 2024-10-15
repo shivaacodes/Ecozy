@@ -2,7 +2,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function ProfilePage() {
-  //  fetch this data from an API or database
   const user = {
     name: "Rony Mundackal",
     address: "Kannur",
@@ -27,7 +26,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground p-8">
+    <div className="min-h-screen bg-background text-foreground p-8 w-full">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center space-x-4 mb-8">
           <Avatar className="w-20 h-20">

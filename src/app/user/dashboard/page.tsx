@@ -64,7 +64,7 @@ export default function Dashboard() {
   }, [chartData]);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground w-full">
       <nav className="flex justify-between items-center p-4 bg-card">
         <h1 className="text-2xl font-bold">Dashboard</h1>
         <div className="flex items-center space-x-4">
