@@ -12,7 +12,7 @@ export default function Homepage() {
           <br />
           Thrissur's Green
           <br />
-          revolution starts here
+          Revolution Starts Here.
         </h2>
         <p className="text-xl mb-8 max-w-2xl">
           Join us in making Thrissur a greener, cleaner, and more sustainable

@@ -65,7 +65,7 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-background text-foreground w-full">
-      <nav className="flex justify-between items-center p-4 bg-card">
+      <nav className="flex justify-between items-center p-4 bg-card h-96 pt-80">
         <h1 className="text-2xl font-bold">Dashboard</h1>
         <div className="flex items-center space-x-4">
           <span>Hi {userName},</span>
@@ -83,10 +83,12 @@ export default function Dashboard() {
               <CardTitle>Schedule</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <Input placeholder="Enter schedule details" />
-              <div className="flex justify-between">
+              <div className="space-y-2">
+                <Input placeholder="Enter schedule details" />
+              </div>
+              <div className="flex justify-end space-x-2">
                 <Button variant="outline">Cancel</Button>
-                <Button>Reschedule</Button>
+                <Button variant={"report"}>Reschedule</Button>
               </div>
             </CardContent>
           </Card>
@@ -135,7 +137,7 @@ export default function Dashboard() {
                                 y={(viewBox.cy || 0) + 24}
                                 className="fill-muted-foreground"
                               >
-                                Visitors
+                                Waste Collected
                               </tspan>
                             </text>
                           );
@@ -148,11 +150,11 @@ export default function Dashboard() {
             </CardContent>
             <CardFooter className="flex-col gap-2 text-sm">
               <div className="flex items-center gap-2 font-medium leading-none">
-                Trending up by 5.2% this month{" "}
+                Plastic waste reduced by 3.8% this month!{" "}
                 <TrendingUp className="h-4 w-4" />
               </div>
               <div className="leading-none text-muted-foreground">
-                Showing total visitors for the last 6 months
+                Waste Collection Data of the past month 🎉
               </div>
             </CardFooter>
           </Card>
@@ -162,11 +164,13 @@ export default function Dashboard() {
               <CardTitle>Report Disposal</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <Input placeholder="Title" />
-              <Input placeholder="Description" />
-              <Input type="file" accept="image/*" />
-              <div className="flex justify-between">
-                <Button>Report</Button>
+              <div className="space-y-2">
+                <Input placeholder="Title" />
+                <Input placeholder="Description" />
+                <Input type="file" accept="image/*" />
+              </div>
+              <div className="flex justify-end space-x-2">
+                <Button variant="report">Report</Button>
                 <Button variant="outline">View Reports</Button>
               </div>
             </CardContent>
@@ -174,17 +178,17 @@ export default function Dashboard() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Redeemable Voucher</CardTitle>
+              <CardTitle>Vouchers</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-4xl font-bold text-green-500">
-                {points} points
+                {points} Eco-Credits ☘️
               </p>
               <Button
                 className="mt-4 w-full"
                 onClick={() => setPoints((prev) => prev + 1)}
               >
-                Redeem
+                Redeem Now
               </Button>
             </CardContent>
           </Card>
