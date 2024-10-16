@@ -1,23 +1,48 @@
-//Worker dashboard
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
-import { Check } from "lucide-react"
+import { useState } from "react";
+import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { Check } from "lucide-react";
+import Footer from "@/components/Footer";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Textarea } from "@/components/ui/textarea"
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Textarea } from "@/components/ui/textarea";
 
 const collectionPoints = [
-  { houseName: "Krishnadeepam", address: "Kadavu Rd Kannur", contactNo: "8545787410" },
-  { houseName: "Sree Nilayam", address: "MG Road Trivandrum", contactNo: "9876543210" },
-  { houseName: "Green Villa", address: "Beach Road Kozhikode", contactNo: "7890123456" },
-]
+  {
+    houseName: "Krishnadeepam",
+    address: "Kadavu Rd Kannur",
+    contactNo: "8545787410",
+  },
+  {
+    houseName: "Sree Nilayam",
+    address: "MG Road Trivandrum",
+    contactNo: "9876543210",
+  },
+  {
+    houseName: "Green Villa",
+    address: "Beach Road Kozhikode",
+    contactNo: "7890123456",
+  },
+];
 
 const collectionData = [
   { name: "Plastic", value: 30 },
@@ -25,18 +50,20 @@ const collectionData = [
   { name: "Glass", value: 20 },
   { name: "Metal", value: 15 },
   { name: "Organic", value: 10 },
-]
+];
 
 export default function Dashboard() {
-  const [reportTitle, setReportTitle] = useState("")
-  const [reportDescription, setReportDescription] = useState("")
-  const [checkedHouses, setCheckedHouses] = useState<string[]>([])
+  const [reportTitle, setReportTitle] = useState("");
+  const [reportDescription, setReportDescription] = useState("");
+  const [checkedHouses, setCheckedHouses] = useState<string[]>([]);
 
   const handleCheckboxChange = (houseName: string) => {
     setCheckedHouses((prev) =>
-      prev.includes(houseName) ? prev.filter((name) => name !== houseName) : [...prev, houseName]
-    )
-  }
+      prev.includes(houseName)
+        ? prev.filter((name) => name !== houseName)
+        : [...prev, houseName]
+    );
+  };
 
   return (
     <div className="container mx-auto p-4 bg-neutral-950 text-gray-100 min-h-screen">
@@ -44,7 +71,9 @@ export default function Dashboard() {
       <div className="grid gap-6 md:grid-cols-3">
         <Card className="bg-neutral-900 border-gray-700">
           <CardHeader>
-            <CardTitle className="text-2xl text-white">Collection points</CardTitle>
+            <CardTitle className="text-2xl text-white">
+              Collection points
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <Table>
@@ -58,9 +87,15 @@ export default function Dashboard() {
               <TableBody>
                 {collectionPoints.map((point, index) => (
                   <TableRow key={index} className="border-gray-700">
-                    <TableCell className="text-gray-300">{point.houseName}</TableCell>
-                    <TableCell className="text-gray-300">{point.address}</TableCell>
-                    <TableCell className="text-gray-300">{point.contactNo}</TableCell>
+                    <TableCell className="text-gray-300">
+                      {point.houseName}
+                    </TableCell>
+                    <TableCell className="text-gray-300">
+                      {point.address}
+                    </TableCell>
+                    <TableCell className="text-gray-300">
+                      {point.contactNo}
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -88,8 +123,13 @@ export default function Dashboard() {
             </div>
           </CardContent>
           <CardFooter className="flex justify-between">
-            <Button className="bg-red-600 hover:bg-red-700 text-white">Report</Button>
-            <Button variant="outline" className="border-black text-white hover:bg-white hover:text-gray-900">
+            <Button className="bg-red-600 hover:bg-red-700 text-white">
+              Report
+            </Button>
+            <Button
+              variant="outline"
+              className="border-black text-white hover:bg-white hover:text-gray-900"
+            >
               View Reports
             </Button>
           </CardFooter>
@@ -105,10 +145,14 @@ export default function Dashboard() {
                   <Checkbox
                     id={`house-${index}`}
                     checked={checkedHouses.includes(point.houseName)}
-                    onCheckedChange={() => handleCheckboxChange(point.houseName)}
+                    onCheckedChange={() =>
+                      handleCheckboxChange(point.houseName)
+                    }
                     className="border-red-400 text-purple-400"
                   />
-                  <Label htmlFor={`house-${index}`} className="text-gray-300">{point.houseName}</Label>
+                  <Label htmlFor={`house-${index}`} className="text-gray-300">
+                    {point.houseName}
+                  </Label>
                 </div>
               ))}
               <Button className="w-full bg-green-500 hover:bg-green-600 text-white">
@@ -119,8 +163,12 @@ export default function Dashboard() {
         </Card>
         <Card className="bg-neutral-900 border-gray-700">
           <CardHeader>
-            <CardTitle className="text-2xl text-white">Today's Collection</CardTitle>
-            <CardTitle className="text-sm text-gray-400">17th October Thursday</CardTitle>
+            <CardTitle className="text-2xl text-white">
+              Today's Collection
+            </CardTitle>
+            <CardTitle className="text-sm text-gray-400">
+              17th October Thursday
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={200}>
@@ -167,6 +215,7 @@ export default function Dashboard() {
           </CardContent>
         </Card>
       </div>
+      <Footer />
     </div>
-  )
+  );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import { useRouter } from "next/navigation"; // Import useRouter
+import { useRouter } from "next/navigation";
 import {
   Card,
   CardContent,
@@ -10,6 +10,14 @@ import {
   CardDescription,
   CardFooter,
 } from "@/components/ui/card";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableCell,
+} from "@/components/ui/table1";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -32,11 +40,11 @@ export default function Dashboard() {
   const [fade, setFade] = useState(false);
 
   const tips = [
-    "☘️ Reduce plastic use wherever possible to help the environment and conserve resources. Remember that even small changes can make a big difference in reducing waste!",
-    "🌴 Always recycle your waste responsibly. Check local guidelines to ensure you're recycling properly, as contamination can lead to entire batches being sent to landfill.",
-    "💚 Compost organic waste to reduce landfill. Composting not only decreases the amount of waste sent to landfills but also provides nutrient-rich soil for gardening.",
-    "🌲 Participate in local clean-up drives. Engaging with your community not only helps the environment but also raises awareness about littering and waste management.",
-    "🌱 Educate others about waste management. Sharing knowledge and best practices can inspire others to adopt more sustainable habits.",
+    "Reduce plastic use wherever possible to help the environment and conserve resources. Remember that even small changes can make a big difference in reducing waste!",
+    "Always recycle your waste responsibly. Check local guidelines to ensure you're recycling properly, as contamination can lead to entire batches being sent to landfill.",
+    "Compost organic waste to reduce landfill. Composting not only decreases the amount of waste sent to landfills but also provides nutrient-rich soil for gardening.",
+    "Participate in local clean-up drives. Engaging with your community not only helps the environment but also raises awareness about littering and waste management.",
+    "Educate others about waste management. Sharing knowledge and best practices can inspire others to adopt more sustainable habits.",
   ];
 
   const [currentTipIndex, setCurrentTipIndex] = useState(0);
@@ -98,7 +106,7 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-background text-foreground w-full pt-64">
-      <nav className="flex justify-between items-center p-4 bg-card pt-80">
+      <nav className="flex justify-between items-center p-4 pt-60">
         <h1 className="text-2xl font-extrabold pl-6 pb-3">Hello, {userName}</h1>
         <div className="flex items-center space-x-4">
           <Avatar
@@ -236,33 +244,20 @@ export default function Dashboard() {
               </Button>
             </CardContent>
           </Card>
-
-          <Textarea
-            className={` max-h-[180px] mt-3 pt-9 text-lg rounded-lg text-muted-foreground transition-opacity duration-900 ${
-              fade ? "opacity-0" : "opacity-100"
-            }`}
-            readOnly
-            rows={3}
-            value={tips[currentTipIndex]}
-          />
-
           <Card className="max-h-[200px]">
             <CardHeader>
               <CardTitle>Government Sites</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4 font-light">
+            <CardContent className="space-y-4 font-light italic">
               <div className="space-y-4">
                 {" "}
-                {/* Space between each row */}
                 {["Suchitwa Mission", "KSWMP"].map((place) => (
                   <div key={place} className="flex justify-between">
-                    {/* Flex container for each row */}
                     <a
                       href={`#direction-to-${place.toLowerCase()}`}
                       className="text-blue-500 hover:underline"
                     >
-                      {/* Link for the first place */}
-                      {place} Location
+                      {place}
                     </a>
                     <a
                       href={`#more-info-${place.toLowerCase()}`}
@@ -273,6 +268,85 @@ export default function Dashboard() {
                     </a>
                   </div>
                 ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Textarea
+            className={`max-h-[180px] italic mt-2 pt-3 text-md rounded-lg text-muted-foreground transition-opacity duration-900 ${
+              fade ? "opacity-0" : "opacity-100"
+            }`}
+            readOnly
+            rows={4}
+            value={`💚 Green Insights\n\n${tips[currentTipIndex]}`}
+          />
+          <Card className="h-auto col-span-full">
+            <CardHeader>
+              <CardTitle>Monthly Collection Summary</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="overflow-x-auto">
+                <Table className="min-w-full bg-black border-collapse">
+                  <TableHeader>
+                    <TableRow className="bg-muted-foreground bg-neutral-900 text-left font-extrabold italic">
+                      <TableCell className="py-2 px-12">Date</TableCell>
+                      <TableCell className="py-2 px-10">Waste Type</TableCell>
+                      <TableCell className="py-2 px-13">Weight (kg)</TableCell>
+                      <TableCell className="py-2 px-10">
+                        Eco-Credit Earned ☘️
+                      </TableCell>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {[
+                      {
+                        date: "01/10/2024",
+                        type: "Plastic",
+                        weight: 2.5,
+                        ecoCredit: 10,
+                      },
+                      {
+                        date: "03/10/2024",
+                        type: "Bio-degradable",
+                        weight: 1.2,
+                        ecoCredit: 5,
+                      },
+                      {
+                        date: "05/10/2024",
+                        type: "E-waste",
+                        weight: 3.8,
+                        ecoCredit: 9,
+                      },
+                      {
+                        date: "05/10/2024",
+                        type: "E-waste",
+                        weight: 3.8,
+                        ecoCredit: 2,
+                      },
+                      {
+                        date: "05/10/2024",
+                        type: "E-waste",
+                        weight: 3.8,
+                        ecoCredit: 5,
+                      },
+                    ].map((item, index) => (
+                      <TableRow key={index} className="border-t italic">
+                        <TableCell className="py-2 px-20 bg-neutral-900">
+                          {item.date}
+                        </TableCell>
+                        <TableCell className="py-2 px-20 bg-neutral-900">
+                          {item.type}
+                        </TableCell>
+                        <TableCell className="py-2 px-20 bg-neutral-900">
+                          {item.weight}
+                        </TableCell>
+                        <TableCell className="py-2 px-20 text-green-400 bg-neutral-900">
+                          {item.ecoCredit}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
               </div>
             </CardContent>
           </Card>

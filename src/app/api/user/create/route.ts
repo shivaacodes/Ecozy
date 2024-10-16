@@ -4,12 +4,12 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
-  const { name, address, phone } = await req.json();
+  const { name, email, address, phone } = await req.json(); // Include email here
   const role = "RESIDENT";
 
-  if (!name || !address || !phone) {
+  if (!name || !email || !address || !phone) {
     return NextResponse.json(
-      { error: "Name, address, and phone are required" },
+      { error: "Name, email, address, and phone are required" },
       { status: 400 }
     );
   }
@@ -18,6 +18,7 @@ export async function POST(req: Request) {
     const user = await prisma.user.create({
       data: {
         name,
+        email,
         address,
         phone,
         role,

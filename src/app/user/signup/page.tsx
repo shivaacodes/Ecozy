@@ -7,12 +7,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import "react-toastify/dist/ReactToastify.css"; // Import the CSS
 
 const ProfileCard = () => {
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(""); // State for email
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
@@ -27,7 +26,7 @@ const ProfileCard = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, password, address, phone }),
+        body: JSON.stringify({ name, email, address, phone }), // Include email in the body
       });
 
       if (!response.ok) {
@@ -47,13 +46,10 @@ const ProfileCard = () => {
       const data = await response.json();
       console.log("User created:", data);
 
-      // Display success notification
       toast.success("Account created successfully!");
 
-      // Reset form fields
       setName("");
       setEmail("");
-      setPassword("");
       setAddress("");
       setPhone("");
     } catch (error) {
@@ -92,17 +88,6 @@ const ProfileCard = () => {
                 required
               />
             </div>
-            {/* <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div> */}
             <div className="space-y-2">
               <Label htmlFor="address">Address</Label>
               <Textarea
@@ -132,7 +117,7 @@ const ProfileCard = () => {
           </form>
         </CardContent>
       </Card>
-      <ToastContainer /> {/* Include the ToastContainer */}
+      <ToastContainer />
     </>
   );
 };
