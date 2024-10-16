@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 
 export default function Homepage() {
   return (
@@ -18,10 +19,19 @@ export default function Homepage() {
           Join us in making Thrissur a greener, cleaner, and more sustainable
           city. Every small action counts towards a big change.
         </p>
-        <div>
+        <div className="space-y-4">
           <Button size="lg" onClick={() => signIn()}>
             Sign In
           </Button>
+          <div className="text-sm">
+            <span className="mr-2">New User?</span>
+            <Link
+              href="/user/signup"
+              className="text-green-400 hover:underline"
+            >
+              Sign Up
+            </Link>
+          </div>
         </div>
       </main>
     </div>
