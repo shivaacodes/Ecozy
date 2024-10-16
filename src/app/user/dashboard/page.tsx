@@ -1,8 +1,8 @@
 "use client";
-import { format } from "date-fns"
-import { Calendar as CalendarIcon } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { Calendar } from "@/components/ui/calendar"
+import { format } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Calendar } from "@/components/ui/calendar";
 import { useState, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -38,7 +38,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import Footer from "@/components/Footer";
 
 export default function Dashboard() {
@@ -106,7 +105,7 @@ export default function Dashboard() {
     return chartData.reduce((acc, curr) => acc + curr.visitors, 0);
   }, [chartData]);
 
-  const [date, setDate] = useState<Date | undefined>(new Date("2024-10-12"))
+  const [date, setDate] = useState<Date | undefined>(new Date("2024-10-12"));
 
   const days = Array.from({ length: 11 }, (_, i) => {
     const date = new Date();
@@ -131,44 +130,50 @@ export default function Dashboard() {
 
       <main className="container mx-auto p-4 space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <Card className="w-[485px]">
-      <CardHeader>
-        <CardTitle>Schedule</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p className="text-sm text-muted-foreground">
-          Next scheduled date:
-        </p>
-        <p className="text-2xl font-bold">
-          {date ? format(date, "dd MMMM yyyy") : "Not scheduled"}
-        </p>
-      </CardContent>
-      <CardFooter className="flex justify-between">
-        <p className="text-sm text-muted-foreground">Select date to reschedule:</p>
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              variant={"outline"}
-              className={cn(
-                "w-[180px] justify-start text-left font-normal",
-                !date && "text-muted-foreground"
-              )}
-            >
-              <CalendarIcon className="mr-2 h-4 w-4" />
-              {date ? format(date, "PPP") : <span>Pick a date</span>}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0">
-            <Calendar
-              mode="single"
-              selected={date}
-              onSelect={setDate}
-              initialFocus
-            />
-          </PopoverContent>
-        </Popover>
-      </CardFooter>
-    </Card>
+          <Card className="w-[485px]">
+            <CardHeader>
+              <CardTitle>Schedule</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                Next scheduled date:
+              </p>
+              <p className="text-2xl font-bold">
+                {date ? format(date, "dd MMMM yyyy") : "Not scheduled"}
+              </p>
+            </CardContent>
+            <CardFooter className="flex justify-between">
+              <p className="text-sm text-muted-foreground">
+                Select date to reschedule:
+              </p>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-[180px] justify-start text-left font-normal",
+                      !date && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {date ? format(date, "PPP") : <span>Pick a date</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={date}
+                    onSelect={setDate}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+              <div className="flex space-x-2">
+                <Button variant="outline">Cancel</Button>
+                <Button variant={"report"}>Reschedule</Button>
+              </div>
+            </CardFooter>
+          </Card>
 
           <Card className="flex flex-col">
             <CardHeader className="items-center pb-0">
