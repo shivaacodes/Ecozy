@@ -40,7 +40,6 @@ import {
 } from "@/components/ui/chart";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Footer from "@/components/Footer";
-
 export default function Dashboard() {
   const router = useRouter();
   const [userName, setUserName] = useState("Rony");
@@ -113,6 +112,7 @@ export default function Dashboard() {
     date.setDate(date.getDate() + i);
     return date.toLocaleDateString("en-GB");
   });
+
 
   return (
     <div className="min-h-screen bg-background text-foreground w-full pt-64">

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import { Check } from "lucide-react";
 import Footer from "@/components/Footer";
-
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -25,7 +25,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
-
+import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 const collectionPoints = [
   {
     houseName: "Krishnadeepam",
@@ -42,20 +42,31 @@ const collectionPoints = [
     address: "Beach Road Kozhikode",
     contactNo: "7890123456",
   },
+  {
+    houseName: "Green Villar",
+    address: "Beach Road Kozhikode",
+    contactNo: "7890123456",
+  },
+  {
+    houseName: "Krishnadeepa",
+    address: "Kadavu Rd Kannur",
+    contactNo: "8545787410",
+  },
 ];
 
 const collectionData = [
   { name: "Plastic", value: 30 },
-  { name: "Paper", value: 25 },
+  { name: "Paper", value: 40 },
   { name: "Glass", value: 20 },
   { name: "Metal", value: 15 },
-  { name: "Organic", value: 10 },
+  { name: "Organic", value: 20 },
 ];
 
 export default function Dashboard() {
   const [reportTitle, setReportTitle] = useState("");
   const [reportDescription, setReportDescription] = useState("");
   const [checkedHouses, setCheckedHouses] = useState<string[]>([]);
+  const router = useRouter();
 
   const handleCheckboxChange = (houseName: string) => {
     setCheckedHouses((prev) =>
@@ -64,10 +75,40 @@ export default function Dashboard() {
         : [...prev, houseName]
     );
   };
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: "AIzaSyA5bMiRspz5PfZFUdv876XAdSm4jAPrss4",
+  });
+
+  const plantLocations = [
+    {
+      id: 1,
+      name: "Sakthan Thampuran Bio-Waste Treatment Plant",
+      lat: 10.521,
+      lng: 76.2144,
+    },
+    {
+      id: 2,
+      name: "Chalakudy Wastewater Treatment Plant",
+      lat: 10.3071,
+      lng: 76.3189,
+    },
+    {
+      id: 3,
+      name: "Nattika Beach Waste Treatment",
+      lat: 10.3545,
+      lng: 76.0674,
+    },
+  ];
+
+  const mapStyles = {
+    height: "400px",
+    width: "100%",
+  };
+  const [mapCenter, setMapCenter] = useState({ lat: 10.5276, lng: 76.2144 });
 
   return (
     <div className="container mx-auto p-4 bg-neutral-950 text-gray-100 min-h-screen">
-      <h1 className="text-3xl font-extrabold mb-6  text-white mt-72">
+      <h1 className="text-3xl font-extrabold mb-6  text-white mt-80">
         Hello, Rony
       </h1>
       <div className="grid gap-6 md:grid-cols-3">
@@ -120,12 +161,15 @@ export default function Dashboard() {
                     }
                     className="border-red-400 text-purple-400"
                   />
-                  <Label htmlFor={`house-${index}`} className="text-gray-300">
+                  <Label
+                    htmlFor={`house-${index}`}
+                    className="text-gray-300 mt-3"
+                  >
                     {point.houseName}
                   </Label>
                 </div>
               ))}
-              <Button className="w-full bg-green-500 hover:bg-green-600 text-white">
+              <Button className="w-full bg-green-500 hover:bg-green-800 text-black">
                 <Check className="mr-2 h-4 w-4" /> Submit
               </Button>
             </form>
@@ -172,7 +216,7 @@ export default function Dashboard() {
               17th October Thursday
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="mt-10">
             <ResponsiveContainer width="100%" height={200}>
               <BarChart data={collectionData}>
                 <XAxis
@@ -205,15 +249,28 @@ export default function Dashboard() {
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-neutral-900 border-gray-700 col-span-2 max-h-96">
+        <Card className="w-full md:col-span-2">
           <CardHeader>
-            <CardTitle className="text-2xl text-white">Map View</CardTitle>
+            <CardTitle>Find Disposal Centers Near You</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="aspect-square bg-neutral-800 flex items-center justify-center max-h-72">
-              <div className=" w-12 text-gray-500" />
-              <span className="ml-0 text-gray-500">Google Map API</span>
-            </div>
+            {isLoaded ? (
+              <GoogleMap
+                mapContainerStyle={mapStyles}
+                zoom={10}
+                center={mapCenter}
+              >
+                {plantLocations.map((plant) => (
+                  <Marker
+                    key={plant.id}
+                    position={{ lat: plant.lat, lng: plant.lng }}
+                    title={plant.name}
+                  />
+                ))}
+              </GoogleMap>
+            ) : (
+              <p>Loading map...</p>
+            )}
           </CardContent>
         </Card>
       </div>

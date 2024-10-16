@@ -7,6 +7,18 @@ import { Button } from "@/components/ui/button";
 import { Home, LogOut } from "lucide-react";
 import { Footer } from "react-day-picker";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 export default function ProfilePage() {
   const router = useRouter();
 
@@ -17,33 +29,33 @@ export default function ProfilePage() {
     reports: [
       {
         id: 1,
-        title: "Latest Report",
-        content: "Content of the latest report...",
+        title: "Cylon Kitchen waste dumping",
+        content:
+          "I noticed that the owner of Cylon Kitchen, located near Thekkinkadu maidan has been dumping leftover food outside, which is attracting rats. The rodents are now getting into the kitchen and contaminating the food utensils. This is a serious health risk, and I hope local authorities can address the situation to ensure food safety.",
       },
       {
         id: 2,
-        title: "Previous Report",
-        content: "Content of a previous report...",
+        title: "Waste dumping in Laloor",
+        content:
+          "I recently saw two young people dumping waste in an open area behind Laloor. It’s disappointing to see this happening when proper disposal options are available. This kind of behavior affects the environment and the community’s health. I hope local authorities can look into it and take steps to stop it.",
       },
       {
         id: 3,
-        title: "Older Report",
-        content: "Content of an older report...",
+        title: "Unsafe Debris on Sidewalk Poses Risk to Pedestrians",
+        content:
+          "I observed a construction site where workers are leaving debris scattered on the nearby sidewalk. It’s creating a safety hazard for pedestrians, who have to walk around it or risk tripping. This kind of carelessness needs to be addressed to keep the area safe for everyone.",
       },
     ],
   };
 
   const handleLogout = () => {
-    // Implement your logout logic here
-    // For example:
-    // await signOut();
     router.push("/");
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground p-8 w-full">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
+    <div className="min-h-screen bg-background text-foreground p-8 w-full mt-32 italic">
+      <div className="max-w-4xl mx-auto ">
+        <div className="flex justify-between items-center mb-8 mt-6">
           <Button
             variant="outline"
             onClick={() => router.push("/user/dashboard")}
@@ -52,14 +64,30 @@ export default function ProfilePage() {
             <Home className="w-4 h-4" />
             Home
           </Button>
-          <Button
-            variant="destructive"
-            onClick={handleLogout}
-            className="flex items-center gap-2"
-          >
-            <LogOut className="w-4 h-4" />
-            Logout
-          </Button>
+
+          <AlertDialog>
+            <AlertDialogTrigger className="flex items-center gap-2 bg-red-800 h-9 text-sm border hover:bg-red-900 px-4 py-2 rounded-md">
+              <LogOut className="w-4 h-4" />
+              Logout
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Sure you want to logout?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  You will be logged out of your account.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={handleLogout}
+                  className="bg-red-800 hover:bg-red-900 text-white"
+                >
+                  Yes
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
 
         <div className="flex items-center space-x-4 mb-8">
