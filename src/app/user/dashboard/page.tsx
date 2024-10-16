@@ -38,6 +38,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import Footer from "@/components/Footer";
 
 export default function Dashboard() {
@@ -168,10 +169,6 @@ export default function Dashboard() {
                   />
                 </PopoverContent>
               </Popover>
-              <div className="flex space-x-2">
-                <Button variant="outline">Cancel</Button>
-                <Button variant={"report"}>Reschedule</Button>
-              </div>
             </CardFooter>
           </Card>
 

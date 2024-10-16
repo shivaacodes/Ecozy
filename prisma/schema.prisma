@@ -8,12 +8,14 @@ datasource db {
 }
 
 model Report {
-  id        String   @id @default(cuid())
-  userId    String
-  location  String
-  details   String
-  imageUrl  String? // Optional URL of an image showing the incident
-  createdAt DateTime @default(now())
+  id          String   @id @default(cuid())
+  userId      String
+  title       String
+  description String
+  location    String
+  details     String
+  imageUrl    String? // Optional URL of an image showing the incident
+  createdAt   DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

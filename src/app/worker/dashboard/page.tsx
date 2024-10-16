@@ -106,38 +106,6 @@ export default function Dashboard() {
         </Card>
         <Card className="bg-neutral-900 border-gray-700">
           <CardHeader>
-            <CardTitle className="text-2xl text-white">Report</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <Input
-                placeholder="Title"
-                value={reportTitle}
-                onChange={(e) => setReportTitle(e.target.value)}
-                className="bg-neutral-900 text-gray-100 border-gray-600"
-              />
-              <Textarea
-                placeholder="Description"
-                value={reportDescription}
-                onChange={(e) => setReportDescription(e.target.value)}
-                className="bg-neutral-900 text-gray-100 border-gray-600"
-              />
-            </div>
-          </CardContent>
-          <CardFooter className="flex justify-between">
-            <Button className="bg-red-600 hover:bg-red-700 text-white">
-              Report
-            </Button>
-            <Button
-              variant="outline"
-              className="border-black text-white hover:bg-white hover:text-gray-900"
-            >
-              View Reports
-            </Button>
-          </CardFooter>
-        </Card>
-        <Card className="bg-neutral-900 border-gray-700">
-          <CardHeader>
             <CardTitle className="text-2xl text-white">Check-list</CardTitle>
           </CardHeader>
           <CardContent>
@@ -162,6 +130,38 @@ export default function Dashboard() {
               </Button>
             </form>
           </CardContent>
+        </Card>
+        <Card className="bg-neutral-900 border-gray-700">
+          <CardHeader>
+            <CardTitle className="text-2xl text-white">Report</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <Input
+                placeholder="Title"
+                value={reportTitle}
+                onChange={(e) => setReportTitle(e.target.value)}
+                className="bg-neutral-900 text-gray-100 border-gray-600"
+              />
+              <Textarea
+                placeholder="Description"
+                value={reportDescription}
+                onChange={(e) => setReportDescription(e.target.value)}
+                className="bg-neutral-900 text-gray-100 border-gray-600"
+              />
+            </div>
+          </CardContent>
+          <CardFooter className="flex justify-between">
+            <Button className="bg-red-600 hover:bg-red-700 text-white">
+              Report
+            </Button>
+            <Button
+              variant="outline"
+              className="border-black text-white hover:bg-neutral-900 font-extrabold hover:text-gray-200"
+            >
+              View Reports
+            </Button>
+          </CardFooter>
         </Card>
         <Card className="bg-neutral-900 border-gray-700">
           <CardHeader>
