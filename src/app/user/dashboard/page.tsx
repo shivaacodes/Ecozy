@@ -1,5 +1,8 @@
 "use client";
-
+import { format } from "date-fns"
+import { Calendar as CalendarIcon } from "lucide-react"
+import { cn } from "@/lib/utils"
+import { Calendar } from "@/components/ui/calendar"
 import { useState, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -17,6 +20,11 @@ import {
   TableRow,
   TableCell,
 } from "@/components/ui/table1";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -98,6 +106,8 @@ export default function Dashboard() {
     return chartData.reduce((acc, curr) => acc + curr.visitors, 0);
   }, [chartData]);
 
+  const [date, setDate] = useState<Date | undefined>(new Date("2024-10-12"))
+
   const days = Array.from({ length: 11 }, (_, i) => {
     const date = new Date();
     date.setDate(date.getDate() + i);
@@ -121,24 +131,44 @@ export default function Dashboard() {
 
       <main className="container mx-auto p-4 space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Schedule</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <ScrollArea className="h-64">
-                <div className="space-y-2">
-                  {days.map((day) => (
-                    <Input key={day} placeholder={`Schedule for ${day}`} />
-                  ))}
-                </div>
-              </ScrollArea>
-              <div className="flex justify-end space-x-2">
-                <Button variant="outline">Cancel</Button>
-                <Button variant={"report"}>Reschedule</Button>
-              </div>
-            </CardContent>
-          </Card>
+        <Card className="w-[485px]">
+      <CardHeader>
+        <CardTitle>Schedule</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p className="text-sm text-muted-foreground">
+          Next scheduled date:
+        </p>
+        <p className="text-2xl font-bold">
+          {date ? format(date, "dd MMMM yyyy") : "Not scheduled"}
+        </p>
+      </CardContent>
+      <CardFooter className="flex justify-between">
+        <p className="text-sm text-muted-foreground">Select date to reschedule:</p>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant={"outline"}
+              className={cn(
+                "w-[180px] justify-start text-left font-normal",
+                !date && "text-muted-foreground"
+              )}
+            >
+              <CalendarIcon className="mr-2 h-4 w-4" />
+              {date ? format(date, "PPP") : <span>Pick a date</span>}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0">
+            <Calendar
+              mode="single"
+              selected={date}
+              onSelect={setDate}
+              initialFocus
+            />
+          </PopoverContent>
+        </Popover>
+      </CardFooter>
+    </Card>
 
           <Card className="flex flex-col">
             <CardHeader className="items-center pb-0">
