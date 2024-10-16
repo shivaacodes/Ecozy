@@ -64,14 +64,6 @@ export default function ProfilePage() {
             <Home className="w-4 h-4" />
             Home
           </Button>
-          <Button
-            variant="destructive"
-            onClick={handleLogout}
-            className="flex items-center gap-2"
-          >
-            <LogOut className="w-4 h-4" />
-            Logout
-          </Button>
 
           <AlertDialog>
             <AlertDialogTrigger className="flex items-center gap-2 bg-red-800 h-9 text-sm border hover:bg-red-900 px-4 py-2 rounded-md">
