@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import { Check } from "lucide-react";
 import Footer from "@/components/Footer";
-
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -25,7 +25,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
-
+import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 const collectionPoints = [
   {
     houseName: "Krishnadeepam",
@@ -56,6 +56,7 @@ export default function Dashboard() {
   const [reportTitle, setReportTitle] = useState("");
   const [reportDescription, setReportDescription] = useState("");
   const [checkedHouses, setCheckedHouses] = useState<string[]>([]);
+  const router=useRouter();
 
   const handleCheckboxChange = (houseName: string) => {
     setCheckedHouses((prev) =>
@@ -64,6 +65,22 @@ export default function Dashboard() {
         : [...prev, houseName]
     );
   };
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: "AIzaSyA5bMiRspz5PfZFUdv876XAdSm4jAPrss4", // Replace with your actual API key
+  });
+
+  const plantLocations = [
+    { id: 1, name: "Sakthan Thampuran Bio-Waste Treatment Plant", lat: 10.5210, lng: 76.2144 },
+    { id: 2, name: "Chalakudy Wastewater Treatment Plant", lat: 10.3071, lng: 76.3189 },
+    { id: 3, name: "Nattika Beach Waste Treatment", lat: 10.3545, lng: 76.0674 },
+    // Add more plants here
+  ];
+  
+  const mapStyles = {
+    height: "400px",
+    width: "100%",
+  };
+  const [mapCenter, setMapCenter] = useState({ lat: 10.5276, lng: 76.2144 }); // Thrissur coordinates
 
   return (
     <div className="container mx-auto p-4 bg-neutral-950 text-gray-100 min-h-screen">
@@ -130,7 +147,7 @@ export default function Dashboard() {
             </Button>
             <Button
               variant="outline"
-              className="border-black text-white hover:bg-white hover:text-gray-900"
+              className="border-black text-white hover:bg-white hover:text-gray-900" onClick={()=>router.push('/worker/profile')}
             >
               View Reports
             </Button>
@@ -205,15 +222,25 @@ export default function Dashboard() {
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-neutral-900 border-gray-700 col-span-2 max-h-96">
+        <Card className="w-full md:col-span-2">
           <CardHeader>
-            <CardTitle className="text-2xl text-white">Map View</CardTitle>
+            <CardTitle>Find Disposal Centers Near You</CardTitle>
+            
           </CardHeader>
           <CardContent>
-            <div className="aspect-square bg-neutral-800 flex items-center justify-center max-h-72">
-              <div className=" w-12 text-gray-500" />
-              <span className="ml-0 text-gray-500">Google Map API</span>
-            </div>
+          {isLoaded ? (
+        <GoogleMap mapContainerStyle={mapStyles} zoom={10} center={mapCenter}>
+          {plantLocations.map((plant) => (
+            <Marker
+              key={plant.id}
+              position={{ lat: plant.lat, lng: plant.lng }}
+              title={plant.name}
+            />
+          ))}
+        </GoogleMap>
+      ) : (
+        <p>Loading map...</p>
+      )}
           </CardContent>
         </Card>
       </div>
