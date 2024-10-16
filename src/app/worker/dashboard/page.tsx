@@ -67,7 +67,9 @@ export default function Dashboard() {
 
   return (
     <div className="container mx-auto p-4 bg-neutral-950 text-gray-100 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6  text-white mt-72">Hello, Rony</h1>
+      <h1 className="text-3xl font-extrabold mb-6  text-white mt-72">
+        Hello, Rony
+      </h1>
       <div className="grid gap-6 md:grid-cols-3">
         <Card className="bg-neutral-900 border-gray-700">
           <CardHeader>
