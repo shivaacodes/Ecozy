@@ -1,7 +1,15 @@
+"use client";
+
+import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Home, LogOut } from "lucide-react";
+import { Footer } from "react-day-picker";
 
 export default function ProfilePage() {
+  const router = useRouter();
+
   const user = {
     name: "Rony Mundackal",
     address: "Kannur",
@@ -25,9 +33,35 @@ export default function ProfilePage() {
     ],
   };
 
+  const handleLogout = () => {
+    // Implement your logout logic here
+    // For example:
+    // await signOut();
+    router.push("/");
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground p-8 w-full">
       <div className="max-w-4xl mx-auto">
+        <div className="flex justify-between items-center mb-8">
+          <Button
+            variant="outline"
+            onClick={() => router.push("/user/dashboard")}
+            className="flex items-center gap-2"
+          >
+            <Home className="w-4 h-4" />
+            Home
+          </Button>
+          <Button
+            variant="destructive"
+            onClick={handleLogout}
+            className="flex items-center gap-2"
+          >
+            <LogOut className="w-4 h-4" />
+            Logout
+          </Button>
+        </div>
+
         <div className="flex items-center space-x-4 mb-8">
           <Avatar className="w-20 h-20">
             <AvatarImage src="/placeholder.svg" alt={user.name} />

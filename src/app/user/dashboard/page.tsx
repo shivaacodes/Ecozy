@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
+import { useRouter } from "next/navigation"; // Import useRouter
 import {
   Card,
   CardContent,
@@ -25,13 +26,14 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import Footer from "@/components/Footer";
 
 export default function Dashboard() {
+  const router = useRouter();
   const [userName, setUserName] = useState("Rony");
   const [points, setPoints] = useState(256);
   const [fade, setFade] = useState(false);
 
   const tips = [
     "☘️ Reduce plastic use wherever possible to help the environment and conserve resources. Remember that even small changes can make a big difference in reducing waste!",
-    "🌴 Always recycle your waste responsibly. Check local guidelines to ensure you're recycling properly, as  contamination can lead to entire batches being sent to landfill.",
+    "🌴 Always recycle your waste responsibly. Check local guidelines to ensure you're recycling properly, as contamination can lead to entire batches being sent to landfill.",
     "💚 Compost organic waste to reduce landfill. Composting not only decreases the amount of waste sent to landfills but also provides nutrient-rich soil for gardening.",
     "🌲 Participate in local clean-up drives. Engaging with your community not only helps the environment but also raises awareness about littering and waste management.",
     "🌱 Educate others about waste management. Sharing knowledge and best practices can inspire others to adopt more sustainable habits.",
@@ -99,7 +101,10 @@ export default function Dashboard() {
       <nav className="flex justify-between items-center p-4 bg-card pt-80">
         <h1 className="text-2xl font-extrabold pl-6 pb-3">Hello, {userName}</h1>
         <div className="flex items-center space-x-4">
-          <Avatar>
+          <Avatar
+            onClick={() => router.push("/user/profile")}
+            className="cursor-pointer"
+          >
             <AvatarImage src="/placeholder.svg" alt={userName} />
             <AvatarFallback>{userName[0]}</AvatarFallback>
           </Avatar>
@@ -205,12 +210,17 @@ export default function Dashboard() {
               </div>
               <div className="flex justify-end space-x-2">
                 <Button variant="report">Report</Button>
-                <Button variant="outline">View Reports</Button>
+                <Button
+                  variant="outline"
+                  onClick={() => router.push("/user/profile")}
+                >
+                  View Reports
+                </Button>
               </div>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="max-h-[200px]">
             <CardHeader>
               <CardTitle>Vouchers</CardTitle>
             </CardHeader>
@@ -228,7 +238,7 @@ export default function Dashboard() {
           </Card>
 
           <Textarea
-            className={` mt-3 pt-9 text-lg rounded-lg text-muted-foreground transition-opacity duration-900 ${
+            className={` max-h-[180px] mt-3 pt-9 text-lg rounded-lg text-muted-foreground transition-opacity duration-900 ${
               fade ? "opacity-0" : "opacity-100"
             }`}
             readOnly
@@ -236,18 +246,39 @@ export default function Dashboard() {
             value={tips[currentTipIndex]}
           />
 
-          <Card className="col-span-full">
+          <Card className="max-h-[200px]">
             <CardHeader>
-              <CardTitle>Nearby Disposal Locations</CardTitle>
+              <CardTitle>Government Sites</CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="bg-muted h-[300px] flex items-center justify-center text-muted-foreground rounded-lg">
-                <p>No locations available yet. Please check back later!</p>
+            <CardContent className="space-y-4 font-light">
+              <div className="space-y-4">
+                {" "}
+                {/* Space between each row */}
+                {["Suchitwa Mission", "KSWMP"].map((place) => (
+                  <div key={place} className="flex justify-between">
+                    {/* Flex container for each row */}
+                    <a
+                      href={`#direction-to-${place.toLowerCase()}`}
+                      className="text-blue-500 hover:underline"
+                    >
+                      {/* Link for the first place */}
+                      {place} Location
+                    </a>
+                    <a
+                      href={`#more-info-${place.toLowerCase()}`}
+                      className="text-blue-500 hover:underline"
+                    >
+                      {/* Link for additional info */}
+                      More Info
+                    </a>
+                  </div>
+                ))}
               </div>
             </CardContent>
           </Card>
         </div>
       </main>
+
       <Footer />
     </div>
   );
