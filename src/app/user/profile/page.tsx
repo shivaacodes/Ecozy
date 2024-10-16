@@ -7,6 +7,18 @@ import { Button } from "@/components/ui/button";
 import { Home, LogOut } from "lucide-react";
 import { Footer } from "react-day-picker";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 export default function ProfilePage() {
   const router = useRouter();
 
@@ -60,6 +72,30 @@ export default function ProfilePage() {
             <LogOut className="w-4 h-4" />
             Logout
           </Button>
+
+          <AlertDialog>
+            <AlertDialogTrigger className="flex items-center gap-2 bg-red-800 h-9 text-sm border hover:bg-red-900 px-4 py-2 rounded-md">
+              <LogOut className="w-4 h-4" />
+              Logout
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Sure you want to logout?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  You will be logged out of your account.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={handleLogout}
+                  className="bg-red-800 hover:bg-red-900 text-white"
+                >
+                  Yes
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
 
         <div className="flex items-center space-x-4 mb-8">
