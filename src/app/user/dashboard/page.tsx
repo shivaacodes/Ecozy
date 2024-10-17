@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/chart";
 import Footer from "@/components/Footer";
 import Component from "@/components/ui/schedule-card";
+import Reportcard from "@/components/ui/report-card";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -190,27 +191,7 @@ export default function Dashboard() {
             </CardFooter>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Report Disposal</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Input placeholder="Title..." />
-                <Textarea placeholder="Description..." />
-                <Input type="file" accept="image/*" />
-              </div>
-              <div className="flex justify-end space-x-2">
-                <Button variant="report">Report</Button>
-                <Button
-                  variant="outline"
-                  onClick={() => router.push("/user/profile")}
-                >
-                  View Reports
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+          <Reportcard></Reportcard>
 
           <Card className="max-h-[200px]">
             <CardHeader>

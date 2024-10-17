@@ -70,7 +70,7 @@ export default function Component() {
         </p>
       </CardContent>
       <CardFooter className="flex justify-between mt-10">
-        <p className="text-sm text-muted-foreground">Reschedule date:</p>
+        <p className="text-sm text-muted-foreground ">Reschedule date:</p>
         <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
           <PopoverTrigger asChild>
             <Button
@@ -80,7 +80,7 @@ export default function Component() {
                 !selectedDate && "text-muted-foreground"
               )}
             >
-              <CalendarIcon className="mr-2 h-4 w-4" />
+              <CalendarIcon className="mr-2 h-4 w-4 text-green-400" />
               {selectedDate ? (
                 format(selectedDate, "PPP")
               ) : (
@@ -88,7 +88,7 @@ export default function Component() {
               )}
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-auto p-0">
+          <PopoverContent className="w-auto p-0 ">
             <Calendar
               mode="single"
               selected={selectedDate}

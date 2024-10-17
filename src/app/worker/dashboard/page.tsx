@@ -25,6 +25,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
+import Reportcard from "@/components/ui/report-card";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 const collectionPoints = [
   {
@@ -130,7 +131,7 @@ export default function Dashboard() {
 
   return (
     <div className="container mx-auto p-4 bg-neutral-950 text-gray-100 min-h-screen">
-      <h1 className="text-3xl font-extrabold mb-6  text-white mt-80">
+      <h1 className="text-3xl font-extrabold mb-6  text-white mt-40">
         Hello, Rony
       </h1>
       <div className="grid gap-6 md:grid-cols-3">
@@ -221,27 +222,7 @@ export default function Dashboard() {
             </CardFooter>
           </form>
         </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Report Disposal</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Input placeholder="Title..." />
-              <Textarea placeholder="Description..." />
-              <Input type="file" accept="image/*" />
-            </div>
-            <div className="flex justify-end space-x-2">
-              <Button variant="report">Report</Button>
-              <Button
-                variant="outline"
-                onClick={() => router.push("/user/profile")}
-              >
-                View Reports
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+        <Reportcard></Reportcard>
         <Card className="bg-neutral-900 border-gray-700">
           <CardHeader>
             <CardTitle className="text-2xl text-white">
