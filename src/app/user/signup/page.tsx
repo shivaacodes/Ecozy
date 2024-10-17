@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation"; // Import useRouter from next/navigation
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -14,7 +15,10 @@ const ProfileCard = () => {
   const [email, setEmail] = useState(""); // State for email
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState(""); // State for password
   const [error, setError] = useState("");
+
+  const router = useRouter(); // Initialize useRouter
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,7 +30,7 @@ const ProfileCard = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, address, phone }), // Include email in the body
+        body: JSON.stringify({ name, email, address, phone, password }), // Include password in the body
       });
 
       if (!response.ok) {
@@ -48,10 +52,15 @@ const ProfileCard = () => {
 
       toast.success("Account created successfully!");
 
+      // Reset form fields
       setName("");
       setEmail("");
       setAddress("");
       setPhone("");
+      setPassword(""); // Reset password field
+
+      // Redirect to home page
+      router.push("/"); // Redirect to the home page
     } catch (error) {
       console.error("Unexpected error:", error);
       setError("Unexpected error. Please try again later.");
@@ -87,6 +96,17 @@ const ProfileCard = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
             </div>
             <div className="space-y-2">
               <Label htmlFor="address">Address</Label>

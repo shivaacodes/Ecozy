@@ -43,12 +43,7 @@ const collectionPoints = [
     contactNo: "7890123456",
   },
   {
-    houseName: "Green Villar",
-    address: "Beach Road Kozhikode",
-    contactNo: "7890123456",
-  },
-  {
-    houseName: "Krishnadeepa",
+    houseName: "Shivam",
     address: "Kadavu Rd Kannur",
     contactNo: "8545787410",
   },
@@ -61,7 +56,13 @@ const collectionData = [
   { name: "Metal", value: 15 },
   { name: "Organic", value: 20 },
 ];
-
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 export default function Dashboard() {
   const [reportTitle, setReportTitle] = useState("");
   const [reportDescription, setReportDescription] = useState("");
@@ -99,7 +100,28 @@ export default function Dashboard() {
       lng: 76.0674,
     },
   ];
+  const [housename, setHousename] = useState("");
+  const [wasteEntries, setWasteEntries] = useState([
+    { type: "", weight: "" },
+    { type: "", weight: "" },
+    { type: "", weight: "" },
+  ]);
 
+  const handleWasteChange = (
+    index: number,
+    field: "type" | "weight",
+    value: string
+  ) => {
+    const newEntries = [...wasteEntries];
+    newEntries[index][field] = value;
+    setWasteEntries(newEntries);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Submitted data:", { housename, wasteEntries });
+    // Here you would typically send this data to your backend
+  };
   const mapStyles = {
     height: "400px",
     width: "100%",
@@ -145,67 +167,80 @@ export default function Dashboard() {
             </Table>
           </CardContent>
         </Card>
-        <Card className="bg-neutral-900 border-gray-700">
+        <Card className="w-full max-w-md mx-auto">
           <CardHeader>
-            <CardTitle className="text-2xl text-white">Check-list</CardTitle>
+            <CardTitle>Collection Details</CardTitle>
           </CardHeader>
-          <CardContent>
-            <form className="space-y-4">
-              {collectionPoints.map((point, index) => (
-                <div key={index} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={`house-${index}`}
-                    checked={checkedHouses.includes(point.houseName)}
-                    onCheckedChange={() =>
-                      handleCheckboxChange(point.houseName)
-                    }
-                    className="border-red-400 text-purple-400"
-                  />
-                  <Label
-                    htmlFor={`house-${index}`}
-                    className="text-gray-300 mt-3"
-                  >
-                    {point.houseName}
-                  </Label>
+          <form onSubmit={handleSubmit}>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="housename">Housename</Label>
+                <Select onValueChange={setHousename} value={housename}>
+                  <SelectTrigger id="housename">
+                    <SelectValue placeholder="Select a house" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="house1">Krishnadeepam</SelectItem>
+                    <SelectItem value="house2">Sree Nilayam</SelectItem>
+                    <SelectItem value="house3">Green Villa</SelectItem>
+                    <SelectItem value="house3">Shivam</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              {wasteEntries.map((entry, index) => (
+                <div key={index} className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor={`waste-type-${index}`}>Waste Type</Label>
+                    <Input
+                      id={`waste-type-${index}`}
+                      value={entry.type}
+                      onChange={(e) =>
+                        handleWasteChange(index, "type", e.target.value)
+                      }
+                      placeholder="Enter waste type"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor={`waste-weight-${index}`}>Weight</Label>
+                    <Input
+                      id={`waste-weight-${index}`}
+                      value={entry.weight}
+                      onChange={(e) =>
+                        handleWasteChange(index, "weight", e.target.value)
+                      }
+                      placeholder="Enter weight"
+                    />
+                  </div>
                 </div>
               ))}
-              <Button className="w-full bg-green-500 hover:bg-green-800 text-black">
-                <Check className="mr-2 h-4 w-4" /> Submit
+            </CardContent>
+            <CardFooter>
+              <Button type="submit" className="w-full">
+                Submit
               </Button>
-            </form>
-          </CardContent>
+            </CardFooter>
+          </form>
         </Card>
-        <Card className="bg-neutral-900 border-gray-700">
+        <Card>
           <CardHeader>
-            <CardTitle className="text-2xl text-white">Report</CardTitle>
+            <CardTitle>Report Disposal</CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <Input
-                placeholder="Title"
-                value={reportTitle}
-                onChange={(e) => setReportTitle(e.target.value)}
-                className="bg-neutral-900 text-gray-100 border-gray-600"
-              />
-              <Textarea
-                placeholder="Description"
-                value={reportDescription}
-                onChange={(e) => setReportDescription(e.target.value)}
-                className="bg-neutral-900 text-gray-100 border-gray-600"
-              />
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Input placeholder="Title..." />
+              <Textarea placeholder="Description..." />
+              <Input type="file" accept="image/*" />
+            </div>
+            <div className="flex justify-end space-x-2">
+              <Button variant="report">Report</Button>
+              <Button
+                variant="outline"
+                onClick={() => router.push("/user/profile")}
+              >
+                View Reports
+              </Button>
             </div>
           </CardContent>
-          <CardFooter className="flex justify-between">
-            <Button className="bg-red-600 hover:bg-red-700 text-white">
-              Report
-            </Button>
-            <Button
-              variant="outline"
-              className="border-black text-white hover:bg-neutral-900 font-extrabold hover:text-gray-200"
-            >
-              View Reports
-            </Button>
-          </CardFooter>
         </Card>
         <Card className="bg-neutral-900 border-gray-700">
           <CardHeader>
