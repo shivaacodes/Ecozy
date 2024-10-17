@@ -1,8 +1,4 @@
 "use client";
-import { format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Calendar } from "@/components/ui/calendar";
 import { useState, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -20,11 +16,6 @@ import {
   TableRow,
   TableCell,
 } from "@/components/ui/table1";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -38,8 +29,9 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import Footer from "@/components/Footer";
+import Component from "@/components/ui/schedule-card";
+
 export default function Dashboard() {
   const router = useRouter();
   const [userName, setUserName] = useState("Rony");
@@ -113,7 +105,6 @@ export default function Dashboard() {
     return date.toLocaleDateString("en-GB");
   });
 
-
   return (
     <div className="min-h-screen bg-background text-foreground w-full pt-64">
       <nav className="flex justify-between items-center p-4 pt-60">
@@ -131,46 +122,7 @@ export default function Dashboard() {
 
       <main className="container mx-auto p-4 space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card className="w-[485px]">
-            <CardHeader>
-              <CardTitle>Schedule</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                Next scheduled date:
-              </p>
-              <p className="text-2xl font-bold">
-                {date ? format(date, "dd MMMM yyyy") : "Not scheduled"}
-              </p>
-            </CardContent>
-            <CardFooter className="flex justify-between">
-              <p className="text-sm text-muted-foreground">
-                Select date to reschedule:
-              </p>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant={"outline"}
-                    className={cn(
-                      "w-[180px] justify-start text-left font-normal",
-                      !date && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {date ? format(date, "PPP") : <span>Pick a date</span>}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
-                  <Calendar
-                    mode="single"
-                    selected={date}
-                    onSelect={setDate}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
-            </CardFooter>
-          </Card>
+          <Component></Component>
 
           <Card className="flex flex-col">
             <CardHeader className="items-center pb-0">
@@ -264,16 +216,18 @@ export default function Dashboard() {
             <CardHeader>
               <CardTitle>Vouchers</CardTitle>
             </CardHeader>
-            <CardContent>
-              <p className="text-4xl font-bold text-green-500">
-                {points} Eco-Credits ☘️
+            <CardContent className="pr-0">
+              <p className="text-4xl lg:text-3xl font-bold text-green-500">
+                {points} Eco-Credits☘️
               </p>
-              <Button
-                className="mt-4 w-full"
-                onClick={() => setPoints((prev) => prev + 1)}
-              >
-                Redeem Now
-              </Button>
+              <div className="pr-6">
+                <Button
+                  className="mt-4 w-full"
+                  onClick={() => setPoints((prev) => prev + 1)}
+                >
+                  Redeem Now
+                </Button>
+              </div>
             </CardContent>
           </Card>
           <Card className="max-h-[200px]">
