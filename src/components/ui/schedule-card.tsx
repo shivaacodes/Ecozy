@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 
-export default function Component() {
+export default function ScheduleCard() {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [confirmedDate, setConfirmedDate] = useState<Date | undefined>(
     undefined
